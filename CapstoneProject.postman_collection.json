@@ -1,0 +1,338 @@
+{
+	"info": {
+		"_postman_id": "a44f17c1-8335-44b1-89c8-4531a0d6bcaa",
+		"name": "Capstone Project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "42830234"
+	},
+	"item": [
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base-url}}?q=omaha&appid={{API-Key}}",
+					"host": [
+						"{{base-url}}"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "omaha"
+						},
+						{
+							"key": "appid",
+							"value": "{{API-Key}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer{{API-Key}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"location\": {\r\n    \"latitude\": 43.7001,\r\n    \"longitude\": -79.4163\r\n  },\r\n  \"conditions\": [\"rain\", \"thunderstorm\"],\r\n  \"email\": \"vamana.balaraju@pqa.ca\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.weather-service.com/alerts/subscribe",
+					"protocol": "https",
+					"host": [
+						"api",
+						"weather-service",
+						"com"
+					],
+					"path": [
+						"alerts",
+						"subscribe"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "401-Results-Pass",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"API key is invalid\", function () {\r",
+							"    pm.response.to.have.status(401);\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.message).to.include(\"Invalid API key\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Forecastbase-url}}?q=0@appid={{API-Key}}",
+					"host": [
+						"{{Forecastbase-url}}"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "0@appid={{API-Key}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5 Days Forecast",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Daily forecast exists\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.list[1]).to.have.property(\"main\");\r",
+							"    pm.environment.set(\"1st-After-3hour-temp\", jsonData.list[1].main.temp);\r",
+							"    var Tt = pm.environment.get(\"tomorrow_temp\")\r",
+							"    console.log(\"After 3 hours-temperature\",Tt);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Forecastbase-url}}?q=omaha&appid={{API-Key}}",
+					"host": [
+						"{{Forecastbase-url}}"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "omaha"
+						},
+						{
+							"key": "appid",
+							"value": "{{API-Key}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "With Diff API",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Vamana Balaraju\",\r\n    \"job\": \"QA Engineer\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://reqres.in/api/users",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "With Diff API",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Vamana-Plato\",\r\n    \"job\": \"Sr.QA\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://reqres.in/api/users",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "With Diff API",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Vamana-Plato\",\r\n    \"job\": \"Sr.QA\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://reqres.in/api/users/6",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users",
+						"6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "With Diff API",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://reqres.in/api/users/6",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users",
+						"6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Pre-request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Test for successful response\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// Test if the response contains the weather data which is not empty\r",
+							"pm.test(\"Weather data is returned\", function () {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.weather).to.be.an('array').that.is.not.empty;\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							"let apiKey = pm.environment.get(\"API-Key\"); // Assuming API key is stored in environment variables\r",
+							"\r",
+							"// Ensure API key exists, if not log an error\r",
+							"if (!apiKey) {\r",
+							"    pm.error(\"API Key not found! Please set your weather_api_key environment variable.\");\r",
+							"}\r",
+							"\r",
+							"// Define the base URL of the weather API\r",
+							"let baseURL = \"https://api.openweathermap.org/data/2.5/weather\";\r",
+							"\r",
+							"let city = \"London\"; \r",
+							"\r",
+							"// Constructing the full URL for the request\r",
+							"let requestUrl = `${baseURL}?q=${city},&appid=${apiKey}`;\r",
+							"\r",
+							"// Set the URL dynamically for the current request\r",
+							"pm.request.url = requestUrl;\r",
+							"\r",
+							"// Optionally, log the final request URL for debugging\r",
+							"console.log(\"Request URL: \" + requestUrl);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base-url}}?q=omaha&appid={{API-Key}}",
+					"host": [
+						"{{base-url}}"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "omaha"
+						},
+						{
+							"key": "appid",
+							"value": "{{API-Key}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
