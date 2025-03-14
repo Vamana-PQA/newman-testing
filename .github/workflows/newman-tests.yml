@@ -1,4 +1,4 @@
-name: Run Newman Tests
+name: Run Newman Tests1
 on:
   push:
     branches:
